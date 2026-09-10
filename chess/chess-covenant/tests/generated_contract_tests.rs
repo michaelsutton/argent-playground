@@ -18,9 +18,7 @@ struct SizeSnapshot {
 fn artifact() -> Artifact {
     let artifact: Artifact =
         serde_json::from_str(include_str!("../../build/artifact.json")).expect("pinned chess artifact deserializes");
-    artifact.check_schema_version().expect("chess artifact schema is supported");
-    artifact.verify_id().expect("chess artifact id verifies");
-    artifact.verify_template_plan().expect("chess template plan verifies");
+    artifact.check_consistency().expect("chess artifact is consistent");
     artifact
 }
 

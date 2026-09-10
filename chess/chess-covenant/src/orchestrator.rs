@@ -2007,9 +2007,7 @@ fn sign_builder_input<T: AsRef<Transaction>>(tx: &MutableTransaction<T>, input_i
 fn load_argent_artifact() -> Result<Artifact, OrchestratorError> {
     let artifact: Artifact = serde_json::from_str(include_str!("../../build/artifact.json"))
         .map_err(|err| OrchestratorError(format!("failed to load pinned Argent artifact: {err}")))?;
-    artifact.check_schema_version().map_err(|err| OrchestratorError(format!("unsupported pinned Argent artifact: {err}")))?;
-    artifact.verify_id().map_err(|err| OrchestratorError(format!("invalid pinned Argent artifact id: {err}")))?;
-    artifact.verify_template_plan().map_err(|err| OrchestratorError(format!("invalid pinned Argent template plan: {err}")))?;
+    artifact.check_consistency().map_err(|err| OrchestratorError(format!("invalid pinned Argent artifact: {err}")))?;
     Ok(artifact)
 }
 
